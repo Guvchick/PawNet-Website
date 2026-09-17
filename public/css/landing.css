@@ -1,0 +1,239 @@
+/* ── Герой ───────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  background: var(--brand);
+  color: var(--brand-ink);
+  padding-block: 96px 132px;
+  text-align: center;
+}
+
+.hero__title {
+  font-size: clamp(38px, 7vw, 76px);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.hero__lead {
+  margin: 20px auto 0;
+  max-width: 52ch;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin-top: 36px;
+}
+
+/* Волна-разделитель: тёмная фигура, наезжающая на жёлтый блок */
+.wave {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 64px;
+  color: var(--bg);
+}
+
+.wave svg { width: 100%; height: 100%; }
+
+/* ── Карточки причин ─────────────────────────────────────────────── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.card {
+  padding: 22px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.card h3 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+.card p { color: var(--muted); font-size: 14px; }
+
+/* ── Локации ─────────────────────────────────────────────────────── */
+.chip img { width: 20px; height: 20px; object-fit: contain; }
+
+/* ── Белые списки ────────────────────────────────────────────────── */
+.whitelist {
+  position: relative;
+  overflow: hidden;
+  padding: 44px 48px;
+  border-radius: var(--radius-card);
+  background: var(--brand);
+  color: var(--brand-ink);
+}
+
+.whitelist .section__label { color: var(--brand-ink); opacity: .65; }
+
+.whitelist__text { max-width: 62ch; margin-top: 14px; font-size: 15px; }
+
+.whitelist__cat {
+  position: absolute;
+  right: 40px;
+  bottom: 0;
+  width: 214px;
+  color: var(--surface);
+}
+
+/* ── Тарифы ──────────────────────────────────────────────────────── */
+.periods { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+
+.period {
+  padding: 9px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.period[aria-pressed='true'] {
+  background: var(--brand);
+  border-color: var(--brand);
+  color: var(--brand-ink);
+}
+
+.plans {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.plan {
+  display: flex;
+  flex-direction: column;
+  padding: 28px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.plan--featured { border-color: var(--brand); }
+
+.plan__head { display: flex; align-items: center; gap: 12px; }
+.plan__name { font-size: 20px; font-weight: 700; }
+
+.plan__badge {
+  margin-left: auto;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--brand);
+  color: var(--brand-ink);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.plan__price { margin-top: 18px; display: flex; align-items: baseline; gap: 8px; }
+.plan__amount { font-size: 42px; font-weight: 800; letter-spacing: -0.03em; }
+.plan__per { color: var(--muted); font-size: 13px; }
+
+.plan__list { margin: 22px 0 28px; display: flex; flex-direction: column; gap: 10px; }
+
+.plan__list li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.plan__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+.plan .btn { margin-top: auto; }
+
+/* ── Аккордеон ───────────────────────────────────────────────────── */
+.accordion { margin-top: 28px; border-top: 1px solid var(--border); }
+
+.acc-item { border-bottom: 1px solid var(--border); }
+
+.acc-q {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  width: 100%;
+  padding: 24px 0;
+  text-align: left;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.45;
+  transition: color .15s;
+}
+
+.acc-q:hover { color: var(--brand); }
+.acc-q[aria-expanded='true'] { color: var(--brand); padding-bottom: 12px; }
+
+.acc-q svg {
+  flex: none;
+  width: 14px;
+  margin-top: 9px;
+  margin-left: auto;
+  transition: transform .2s;
+}
+
+.acc-q[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+.acc-a { padding-bottom: 24px; max-width: 1080px; color: var(--muted); font-size: 15px; }
+.acc-a[hidden] { display: none; }
+
+.help__head { display: flex; align-items: flex-start; gap: 24px; flex-wrap: wrap; }
+.help__head .btn { margin-left: auto; }
+
+/* ── Финальный призыв ────────────────────────────────────────────── */
+.cta {
+  position: relative;
+  overflow: hidden;
+  background: var(--brand);
+  color: var(--brand-ink);
+  padding-block: 64px;
+}
+
+.cta__title { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -0.03em; }
+.cta__lead { margin-top: 10px; font-size: 15px; }
+.cta .btn { margin-top: 26px; }
+
+.cta__cat {
+  position: absolute;
+  right: 80px;
+  bottom: 0;
+  width: 258px;
+  color: var(--brand-ink);
+  opacity: .16;
+}
+
+/* ── Адаптив ─────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .cards { grid-template-columns: repeat(2, 1fr); }
+  .whitelist__cat { width: 160px; right: 16px; opacity: .3; }
+  .cta__cat { right: 24px; width: 200px; }
+}
+
+@media (max-width: 720px) {
+  .hero { padding-block: 56px 96px; }
+  .cards, .plans { grid-template-columns: 1fr; }
+  .whitelist { padding: 28px 22px; }
+  .whitelist__cat { display: none; }
+  .cta__cat { opacity: .1; width: 150px; }
+  .acc-q { font-size: 16px; }
+  .help__head .btn { margin-left: 0; }
+}
