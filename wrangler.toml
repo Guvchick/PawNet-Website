@@ -1,11 +1,15 @@
 name = "pawnet-website"
 compatibility_date = "2026-09-17"
 
-# Статический сайт: Worker без своего скрипта, только ассеты.
+# Worker поверх статики: /api/ip отдаёт гео-данные запроса,
+# всё остальное уходит в ассеты через биндинг ASSETS.
+main = "src/index.js"
+
 # html_handling = "auto-trailing-slash" даёт чистые URL:
 #   /offer   -> public/offer.html
 #   /privacy -> public/privacy.html
 [assets]
+binding = "ASSETS"
 directory = "./public"
 html_handling = "auto-trailing-slash"
 not_found_handling = "404-page"

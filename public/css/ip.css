@@ -1,0 +1,113 @@
+/* ── Герой страницы IP ───────────────────────────────────────────── */
+.ip-hero {
+  position: relative;
+  background: var(--brand);
+  color: var(--brand-ink);
+  padding-block: 64px 116px;
+  text-align: center;
+}
+
+.ip-hero__label { font-size: 13px; font-weight: 500; opacity: .7; }
+
+.ip-hero__title {
+  margin-top: 10px;
+  font-size: clamp(32px, 5.5vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+}
+
+.ip-hero__lead { margin-top: 12px; font-size: 15px; }
+
+/* Плашка с адресом */
+.ip-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+  flex-wrap: wrap;
+  max-width: 672px;
+  margin: 30px auto 0;
+  padding: 26px 32px;
+  border-radius: var(--radius-card);
+  background: var(--brand-ink);
+  color: var(--text);
+}
+
+.ip-card__value {
+  font-size: clamp(26px, 4.4vw, 40px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--brand);
+  font-variant-numeric: tabular-nums;
+  word-break: break-all;
+}
+
+.ip-card__value[data-state='loading'] { opacity: .45; }
+.ip-card__value[data-state='error'] { color: #FF8A7A; font-size: 20px; }
+
+.ip-copy {
+  padding: 9px 18px;
+  border-radius: var(--radius-pill);
+  background: rgba(240, 237, 227, .12);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color .15s;
+}
+
+.ip-copy:hover { background: rgba(240, 237, 227, .22); }
+.ip-copy[disabled] { opacity: .4; cursor: default; }
+
+/* ── Подробности ─────────────────────────────────────────────────── */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.fact {
+  padding: 18px 20px;
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.fact__label { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+.fact__value { font-size: 17px; font-weight: 500; }
+.fact__value[data-state='loading'] { color: var(--muted); }
+.fact__note { margin-top: 4px; color: var(--muted); font-size: 12px; }
+
+/* ── Призыв ──────────────────────────────────────────────────────── */
+.ip-cta {
+  position: relative;
+  overflow: hidden;
+  background: var(--brand);
+  color: var(--brand-ink);
+  padding-block: 72px;
+}
+
+.ip-cta__title { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -0.03em; }
+.ip-cta__lead { margin-top: 10px; font-size: 15px; }
+.ip-cta .btn { margin-top: 26px; }
+
+.ip-cta__cat {
+  position: absolute;
+  right: 120px;
+  bottom: 0;
+  width: 258px;
+  color: var(--brand-ink);
+  opacity: .16;
+}
+
+@media (max-width: 1100px) {
+  .facts { grid-template-columns: repeat(2, 1fr); }
+  .ip-cta__cat { right: 24px; width: 200px; }
+}
+
+@media (max-width: 720px) {
+  .facts { grid-template-columns: 1fr; }
+  .ip-card { gap: 14px; padding: 20px; }
+  .ip-cta__cat { opacity: .1; width: 150px; }
+}
