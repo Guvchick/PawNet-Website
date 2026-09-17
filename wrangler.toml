@@ -1,0 +1,14 @@
+name = "pawnet-website"
+compatibility_date = "2026-09-17"
+
+# Статический сайт: Worker без своего скрипта, только ассеты.
+# html_handling = "auto-trailing-slash" даёт чистые URL:
+#   /offer   -> public/offer.html
+#   /privacy -> public/privacy.html
+[assets]
+directory = "./public"
+html_handling = "auto-trailing-slash"
+not_found_handling = "404-page"
+
+[observability]
+enabled = true

@@ -1,0 +1,15 @@
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  X-Frame-Options: SAMEORIGIN
+
+/css/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/favicon.svg
+  Cache-Control: public, max-age=604800
+
+# Страницы — большие, но статичные. Держим в кэше браузера недолго,
+# на edge Cloudflare кэширует их сам.
+/*.html
+  Cache-Control: public, max-age=3600

@@ -1,0 +1,34 @@
+/* PawNet — страницы собраны из SVG-экспорта Figma (фрейм 1440px).
+   Задача этих правил: вписать фиксированный фрейм в любой вьюпорт. */
+
+:root { color-scheme: dark; }
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #131318;
+}
+
+body { overflow-x: hidden; }
+
+main { display: block; }
+
+/* Обёртка фрейма из экспорта */
+[data-svg-wrapper] {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+/* viewBox сам масштабирует содержимое, поэтому фиксированные
+   width/height у <svg> перебиваем на «по ширине контейнера» */
+[data-svg-wrapper] > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Ссылки внутри SVG */
+[data-svg-wrapper] a { cursor: pointer; }
