@@ -1,0 +1,113 @@
+/* Страницы, которые пока остаются SVG-экспортом из Figma.
+   Шапка и подвал у них настоящие, а тело — вектор: его обрезаем по
+   viewBox, чтобы убрать зашитые в макет шапку и подвал. */
+
+.doc {
+  position: relative;
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+}
+
+.doc > svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Невидимые цели прокрутки, расставленные по вертикали над картинкой.
+   Позиция задаётся в процентах, поэтому переживает любое масштабирование. */
+.doc__anchor {
+  position: absolute;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  /* высоту шапки уже учитывает scroll-padding-top у html в base.css */
+  scroll-margin-top: 16px;
+}
+
+/* Кликабельные области поверх оглавления, нарисованного в макете.
+   Координаты в процентах от ширины кадра 1440 и высоты документа. */
+.doc__row {
+  position: absolute;
+  left: 6.8056%;          /* 98 / 1440 */
+  width: 19.0278%;        /* 274 / 1440 */
+  border-radius: 9px;
+  transition: box-shadow .15s;
+}
+
+.doc__row:hover,
+.doc__row:focus-visible { box-shadow: inset 0 0 0 2px var(--brand); }
+
+/* ── Плавающее оглавление ────────────────────────────────────────
+   Закреплено в левом нижнем углу: колонка слева от текста в макете
+   пустая, поэтому кнопка ничего не перекрывает. Список раскрывается
+   вверх. */
+.toc {
+  position: fixed;
+  left: 24px;
+  bottom: 24px;
+  z-index: 40;
+}
+
+.toc__inner { position: relative; }
+
+.toc__btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  background: var(--brand);
+  color: var(--brand-ink);
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .45);
+}
+
+.toc__btn svg { width: 12px; transition: transform .2s; }
+.toc__btn[aria-expanded='true'] svg { transform: rotate(180deg); }
+
+.toc__list {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+  width: 360px;
+  max-height: min(70vh, 560px);
+  padding: 10px;
+  overflow-y: auto;
+  border-radius: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, .55);
+  counter-reset: toc;
+}
+
+.toc__list[hidden] { display: none; }
+
+.toc__list a {
+  display: flex;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 10px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.toc__list a::before {
+  counter-increment: toc;
+  content: counter(toc) '.';
+  flex: none;
+  min-width: 20px;
+  color: var(--brand);
+  font-weight: 500;
+}
+
+.toc__list a:hover { background: var(--surface-2); color: var(--text); }
+
+@media (max-width: 720px) {
+  .toc { left: 16px; bottom: 16px; }
+  .toc__list { width: calc(100vw - 48px); max-height: 55vh; }
+  .toc__list { max-height: 50vh; }
+}

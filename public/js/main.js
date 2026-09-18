@@ -58,6 +58,35 @@
     });
   });
 
+  /* ── Оглавление документа ───────────────────────────────────────── */
+  const tocBtn = document.querySelector('.toc__btn');
+  const tocList = document.getElementById('toc-list');
+
+  if (tocBtn && tocList) {
+    const setOpen = (open) => {
+      tocBtn.setAttribute('aria-expanded', String(open));
+      tocList.hidden = !open;
+    };
+
+    tocBtn.addEventListener('click', () => {
+      setOpen(tocBtn.getAttribute('aria-expanded') !== 'true');
+    });
+
+    // Переход к разделу закрывает список
+    tocList.addEventListener('click', (e) => {
+      if (e.target.closest('a')) setOpen(false);
+    });
+
+    // Клик мимо и Esc — тоже
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.toc')) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    });
+  }
+
   /* ── Срок подписки ──────────────────────────────────────────────── */
   const periods = document.querySelectorAll('.period');
 
