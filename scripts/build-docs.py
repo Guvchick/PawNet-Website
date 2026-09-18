@@ -45,18 +45,21 @@ PRIVACY_TOC = [
 ]
 
 PAGES = {
-    'faq': dict(frame='FAQ', file='faq.html', route='/faq', total=5833, footer_top=5455,
+    'faq': dict(frame='FAQ', file='faq.html', route='/faq', total=5833, footer_top=5455, hero_end=482,
                 title='Ответы на вопросы — PawNet',
                 desc='Частые вопросы о подписке, оплате, возврате средств, приватности и правилах использования PawNet.',
-                toc=None, drop_faded=True),
-    'offer': dict(frame='Оферта', file='offer.html', route='/offer', total=16278, footer_top=15900,
+                toc=None, drop_faded=True,
+                buttons=[dict(x=80, y=5269, w=253, h=56,
+                              href='https://t.me/PawNet_sup',
+                              label='Написать в поддержку')]),
+    'offer': dict(frame='Оферта', file='offer.html', route='/offer', total=16278, footer_top=15900, hero_end=454,
                   title='Публичная оферта — PawNet',
                   desc='Публичная оферта на оказание услуг PawNet: тарифы, оплата, возврат средств, права и обязанности сторон.',
-                  toc=OFFER_TOC, drop_faded=False),
-    'privacy': dict(frame='Политика', file='privacy.html', route='/privacy', total=12070, footer_top=11692,
+                  toc=OFFER_TOC, drop_faded=False, buttons=[]),
+    'privacy': dict(frame='Политика', file='privacy.html', route='/privacy', total=12070, footer_top=11692, hero_end=517,
                     title='Политика конфиденциальности — PawNet',
                     desc='Какие данные PawNet обрабатывает, зачем, где хранит и как их удалить.',
-                    toc=PRIVACY_TOC, drop_faded=False),
+                    toc=PRIVACY_TOC, drop_faded=False, buttons=[]),
 }
 
 NAV = [('/#why', 'Почему мы'), ('/#devices', 'Устройства'), ('/#plans', 'Тарифы'),
@@ -136,6 +139,45 @@ def footer(route):
   </div>
 </footer>'''
 
+def add_backplate(svg, hero_end):
+    """Кладёт сплошную жёлтую подложку под геройскую зону.
+
+    Группы в экспорте обрезаны clip-path, и край обрезки сглаживается:
+    сквозь него просвечивает тёмный фон, и на стыке видна тонкая линия.
+    Если позади лежит тот же жёлтый, сглаживание смешивает жёлтый с жёлтым
+    и линия пропадает."""
+    import re
+    m = re.search(r'<rect width="1440" height="[\d.]+" fill="#131318"[^>]*/>', svg)
+    if not m:
+        raise SystemExit('не найден фоновый прямоугольник')
+    plate = (f'<rect x="0" y="90" width="1440" height="{hero_end - 90}" '
+             f'fill="#F7D44F" stroke="#F7D44F" stroke-width="1"/>')
+    return svg[:m.end()] + '\n  ' + plate + svg[m.end():]
+
+def seal_seams(svg):
+    """Закрывает волосяные швы между соседними полосами.
+
+    Фигуры в экспорте стыкуются впритык. При дробном масштабе (а он дробный
+    на любой ширине окна кроме 1440) на стыке остаётся полупрозрачная строка
+    пикселей — видна как тонкая обводка. Обводка в цвет собственной заливки
+    расширяет фигуру на полпикселя в каждую сторону и стык перекрывается."""
+    import re
+    n = 0
+
+    def add(m):
+        nonlocal n
+        tag, attrs, fill = m.group(1), m.group(2), m.group(3)
+        if 'stroke=' in attrs:
+            return m.group(0)
+        n += 1
+        return f'<{tag}{attrs}fill="{fill}" stroke="{fill}" stroke-width="1"/>'
+
+    # полноширинные полосы-прямоугольники
+    svg = re.sub(r'<(rect)( width="1440"[^>]*?)fill="(#F7D44F|#131318)"\s*/>', add, svg)
+    # волна между жёлтым и тёмным
+    svg = re.sub(r'<(path)( d="M0 [^"]*H0Z" )fill="(#131318)"\s*/>', add, svg)
+    return svg, n
+
 def drop_faded_group(svg):
     """Убирает <g opacity="0.16"> — полупрозрачного кота, у которого
     из-за волны торчат только уши."""
@@ -160,42 +202,38 @@ for key, cfg in PAGES.items():
     if cfg['drop_faded']:
         svg = drop_faded_group(svg)
 
+    svg = add_backplate(svg, cfg['hero_end'])
+    svg, sealed = seal_seams(svg)
+
     crop_h = cfg['footer_top'] - 90
     svg, n = re.subn(
         rf'<svg width="1440" height="{cfg["total"]}" viewBox="0 0 1440 {cfg["total"]}"',
         f'<svg width="1440" height="{crop_h}" viewBox="0 90 1440 {crop_h}"', svg, count=1)
     assert n == 1, f'{key}: не заменён корневой svg'
 
-    anchors, toc_html = '', ''
-    if cfg['toc']:
-        rows = []
-        for i, (y, label) in enumerate(cfg['toc'], 1):
-            pct = (y - 90 - 24) / crop_h * 100          # чуть выше заголовка
-            rows.append(f'      <div class="doc__anchor" id="s{i}" style="top:{pct:.4f}%"></div>')
-        # накладки поверх оглавления, нарисованного в макете
-        for i, ((ry, rh), (_, label)) in enumerate(zip(TOC_ROWS[key], cfg['toc']), 1):
-            top = ry / crop_h * 100
-            hh = rh / crop_h * 100
-            rows.append(
-                f'      <a class="doc__row" href="#s{i}" style="top:{top:.4f}%;height:{hh:.4f}%"'
-                f' aria-label="{label}"></a>')
-        anchors = '\n'.join(rows)
-        links = '\n'.join(
-            f'        <a href="#s{i}">{label}</a>'
-            for i, (_, label) in enumerate(cfg['toc'], 1))
-        toc_html = f'''  <nav class="toc" aria-label="Содержание">
-    <div class="toc__inner">
-      <button class="toc__btn" type="button" aria-expanded="false" aria-controls="toc-list">
-        Содержание
-        <svg viewBox="0 0 14 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M0 4L7 11L14 4"/></svg>
-      </button>
-      <div class="toc__list" id="toc-list" hidden>
-{links}
-      </div>
-    </div>
-  </nav>
+    overlays = []
 
-'''
+    for i, (y, label) in enumerate(cfg['toc'] or [], 1):
+        pct = (y - 90 - 24) / crop_h * 100          # чуть выше заголовка
+        overlays.append(f'      <div class="doc__anchor" id="s{i}" style="top:{pct:.4f}%"></div>')
+
+    # накладки поверх оглавления, нарисованного в макете
+    for i, ((ry, rh), (_, label)) in enumerate(zip(TOC_ROWS.get(key, []), cfg['toc'] or []), 1):
+        overlays.append(
+            f'      <a class="doc__row" href="#s{i}"'
+            f' style="top:{ry / crop_h * 100:.4f}%;height:{rh / crop_h * 100:.4f}%"'
+            f' aria-label="{label}"></a>')
+
+    # накладки поверх нарисованных кнопок
+    for btn in cfg['buttons']:
+        ext = ' target="_blank" rel="noopener"' if btn['href'].startswith('http') else ''
+        overlays.append(
+            f'      <a class="doc__btn" href="{btn["href"]}"{ext}'
+            f' style="left:{btn["x"] / 1440 * 100:.4f}%;top:{(btn["y"] - 90) / crop_h * 100:.4f}%;'
+            f'width:{btn["w"] / 1440 * 100:.4f}%;height:{btn["h"] / crop_h * 100:.4f}%"'
+            f' aria-label="{btn["label"]}"></a>')
+
+    anchors = '\n'.join(overlays)
 
     html = f'''<!DOCTYPE html>
 <html lang="ru">
@@ -218,7 +256,7 @@ for key, cfg in PAGES.items():
 {header(cfg['route'])}
 
 <main>
-{toc_html}  <div class="doc">
+  <div class="doc">
 {anchors}
 {svg}
   </div>
@@ -234,4 +272,5 @@ for key, cfg in PAGES.items():
     before = out.stat().st_size
     out.write_text(html, encoding='utf-8')
     print(f"{cfg['file']:14} {before/1048576:6.2f} -> {out.stat().st_size/1048576:6.2f} МБ   "
-          f"viewBox 0 90 1440 {crop_h}   якорей: {len(cfg['toc']) if cfg['toc'] else 0}")
+          f"viewBox 0 90 1440 {crop_h}   якорей: {len(cfg['toc']) if cfg['toc'] else 0}   "
+          f"швов закрыто: {sealed}   кнопок: {len(cfg['buttons'])}")
