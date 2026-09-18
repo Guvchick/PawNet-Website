@@ -79,6 +79,16 @@
 .fact__value[data-state='loading'] { color: var(--muted); }
 .fact__note { margin-top: 4px; color: var(--muted); font-size: 12px; }
 
+.facts__note {
+  max-width: 70ch;
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.facts__note[hidden] { display: none; }
+
 /* ── Призыв ──────────────────────────────────────────────────────── */
 .ip-cta {
   position: relative;

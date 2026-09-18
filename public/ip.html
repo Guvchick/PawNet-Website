@@ -16,7 +16,9 @@
 <link rel="stylesheet" href="/css/landing.css">
 <link rel="stylesheet" href="/css/ip.css">
 </head>
-<body>
+<!-- data-ip-endpoint: адрес, который идёт в Cloudflare напрямую, мимо CDN.
+     Пока пуст — данные берутся с /api/ip этого же домена. -->
+<body data-ip-endpoint="">
 
 <header class="header">
   <div class="container header__inner">
@@ -95,6 +97,11 @@
           <p class="fact__note">Нужна отдельная проверка через наши DNS-узлы</p>
         </div>
       </div>
+
+      <p class="facts__note" id="facts-note" hidden>
+        Провайдер и расположение сейчас не определяются: сайт отдаётся через CDN,
+        и до сервера доходит адрес его узла, а не твой. Сам IP-адрес показан верно.
+      </p>
     </div>
   </section>
 
