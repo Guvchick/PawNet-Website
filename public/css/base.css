@@ -16,6 +16,8 @@
   --radius-sm: 9px;
   --radius-pill: 999px;
 
+  --font-display: 'Dela Gothic One', 'Geologica', system-ui, sans-serif;
+
   --container: 1280px;
   --gutter: 80px;
 
@@ -73,10 +75,10 @@ ul { list-style: none; padding: 0; }
 }
 
 .section__title {
-  font-size: clamp(28px, 4vw, 44px);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.6vw, 40px);
+  font-weight: 400;
+  line-height: 1.18;
 }
 
 .section__lead {
@@ -153,9 +155,9 @@ a.chip:hover { border-color: var(--brand); }
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  font-size: 26px;
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 400;
 }
 
 .header__logo img { width: 44px; height: 44px; }
@@ -194,7 +196,7 @@ a.chip:hover { border-color: var(--brand); }
   gap: 40px;
 }
 
-.footer__brand { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; }
+.footer__brand { font-family: var(--font-display); font-size: 21px; font-weight: 400; }
 
 .footer__meta { margin-top: 14px; color: var(--muted); font-size: 13px; line-height: 1.85; }
 

@@ -11,10 +11,10 @@
 
 .ip-hero__title {
   margin-top: 10px;
-  font-size: clamp(32px, 5.5vw, 56px);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.08;
+  font-family: var(--font-display);
+  font-size: clamp(30px, 4.8vw, 50px);
+  font-weight: 400;
+  line-height: 1.12;
 }
 
 .ip-hero__lead { margin-top: 12px; font-size: 15px; }
@@ -35,9 +35,9 @@
 }
 
 .ip-card__value {
+  font-family: var(--font-display);
   font-size: clamp(26px, 4.4vw, 40px);
-  font-weight: 800;
-  letter-spacing: -0.02em;
+  font-weight: 400;
   color: var(--brand);
   font-variant-numeric: tabular-nums;
   word-break: break-all;
@@ -88,7 +88,7 @@
   padding-block: 72px;
 }
 
-.ip-cta__title { font-size: clamp(30px, 5vw, 46px); font-weight: 800; letter-spacing: -0.03em; }
+.ip-cta__title { font-family: var(--font-display); font-size: clamp(28px, 4.4vw, 42px); font-weight: 400; }
 .ip-cta__lead { margin-top: 10px; font-size: 15px; }
 .ip-cta .btn { margin-top: 26px; }
 

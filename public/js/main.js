@@ -61,11 +61,21 @@
   /* ── Срок подписки ──────────────────────────────────────────────── */
   const periods = document.querySelectorAll('.period');
 
-  periods.forEach((btn) => {
-    btn.addEventListener('click', () => {
+  if (periods.length) {
+    const apply = (btn) => {
       periods.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-      // TODO: цены для сроков кроме месяца пока не заданы — как только появится
-      // таблица, подставлять её сюда через data-атрибуты карточек.
-    });
-  });
+
+      const key = 'p' + btn.dataset.period;
+      document.querySelectorAll('.plan__amount').forEach((el) => {
+        const price = el.dataset[key];
+        // неразрывный пробел перед знаком рубля, чтобы не переносилось
+        if (price) el.textContent = price.replace(' ', '\u00a0');
+      });
+      document.querySelectorAll('.plan__per').forEach((el) => {
+        el.textContent = btn.dataset.per;
+      });
+    };
+
+    periods.forEach((btn) => btn.addEventListener('click', () => apply(btn)));
+  }
 })();

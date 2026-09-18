@@ -134,21 +134,21 @@
       <p class="section__label">Тарифы</p>
       <h2 class="section__title">Выбери, на сколько берёшь</h2>
 
-      <!-- TODO: цены для 3 месяцев, 6 месяцев и года неизвестны — в макете
-           отрисовано только состояние «Месяц». Проставить data-price-* и
-           включить переключение. -->
       <div class="periods" role="group" aria-label="Срок подписки">
-        <button class="period" type="button" data-period="1" aria-pressed="true">Месяц</button>
-        <button class="period" type="button" data-period="3" aria-pressed="false">3 месяца</button>
-        <button class="period" type="button" data-period="6" aria-pressed="false">6 месяцев</button>
-        <button class="period" type="button" data-period="12" aria-pressed="false">Год</button>
+        <button class="period" type="button" data-period="1" data-per="за месяц" aria-pressed="true">Месяц</button>
+        <button class="period" type="button" data-period="3" data-per="за 3 месяца" aria-pressed="false">3 месяца</button>
+        <button class="period" type="button" data-period="6" data-per="за 6 месяцев" aria-pressed="false">6 месяцев</button>
+        <button class="period" type="button" data-period="12" data-per="за год" aria-pressed="false">Год</button>
       </div>
 
       <div class="plans">
         <article class="plan">
-          <div class="plan__head"><h3 class="plan__name">Базовый</h3></div>
+          <div class="plan__head">
+            <h3 class="plan__name">Базовый</h3>
+            <span class="plan__badge">Есть пробный период</span>
+          </div>
           <p class="plan__price">
-            <span class="plan__amount" data-price="basic">89&nbsp;₽</span>
+            <span class="plan__amount" data-p1="89 ₽" data-p3="249 ₽" data-p6="499 ₽" data-p12="799 ₽">89&nbsp;₽</span>
             <span class="plan__per">за месяц</span>
           </p>
           <ul class="plan__list">
@@ -157,16 +157,18 @@
             <li>Все 8 стран</li>
             <li>Поддержка 24/7</li>
           </ul>
-          <a class="btn btn--ghost" href="https://lk.pawnet.cloud">Попробовать</a>
+          <div class="plan__cta">
+            <a class="btn btn--ghost" href="https://lk.pawnet.cloud">Попробовать</a>
+          </div>
         </article>
 
         <article class="plan plan--featured">
           <div class="plan__head">
             <h3 class="plan__name">Премиум</h3>
-            <span class="plan__badge">Есть пробный период</span>
+            <span class="plan__badge">Белые списки</span>
           </div>
           <p class="plan__price">
-            <span class="plan__amount" data-price="premium">149&nbsp;₽</span>
+            <span class="plan__amount" data-p1="149 ₽" data-p3="449 ₽" data-p6="990 ₽" data-p12="1499 ₽">149&nbsp;₽</span>
             <span class="plan__per">за месяц</span>
           </p>
           <ul class="plan__list">
@@ -175,7 +177,9 @@
             <li>Безлимит по трафику</li>
             <li>Приоритетная маршрутизация</li>
           </ul>
-          <a class="btn btn--primary" href="https://lk.pawnet.cloud">Попробовать Премиум</a>
+          <div class="plan__cta">
+            <a class="btn btn--primary" href="https://lk.pawnet.cloud">Попробовать Премиум</a>
+          </div>
         </article>
       </div>
     </div>
