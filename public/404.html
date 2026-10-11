@@ -7,30 +7,17 @@
 <meta name="robots" content="noindex">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#131318">
+<link rel="preload" href="/fonts/dela-gothic-one-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/geologica-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/fonts.css?v=7edb85d6c4">
+<link rel="stylesheet" href="/css/base.css?v=fe7b00868f">
 <style>
-  :root { color-scheme: dark; }
-  html, body { margin: 0; height: 100%; }
-  body {
-    display: grid;
-    place-items: center;
-    padding: 24px;
-    background: #131318;
-    color: #f4f4f6;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    text-align: center;
-  }
-  .code { font-size: 64px; font-weight: 700; color: #f7d44f; line-height: 1; }
-  h1 { margin: 16px 0 8px; font-size: 22px; font-weight: 600; }
-  p { margin: 0 0 24px; color: #9a9aa6; }
-  a {
-    display: inline-block;
-    padding: 12px 24px;
-    border-radius: 999px;
-    background: #f7d44f;
-    color: #14151f;
-    font-weight: 600;
-    text-decoration: none;
-  }
+  /* шрифты, цвета и кнопка — общие из base.css, здесь только раскладка */
+  html, body { height: 100%; }
+  body { display: grid; place-items: center; padding: 24px; text-align: center; }
+  .code { font-family: var(--font-display); font-size: 72px; line-height: 1; color: var(--brand); }
+  h1 { margin: 18px 0 8px; font-family: var(--font-display); font-size: 24px; font-weight: 400; }
+  p { margin-bottom: 26px; color: var(--muted); font-size: 15px; }
 </style>
 </head>
 <body>
@@ -38,7 +25,7 @@
     <div class="code">404</div>
     <h1>Страница не найдена</h1>
     <p>Такой страницы нет или она переехала.</p>
-    <a href="/">На главную</a>
+    <a class="btn btn--primary" href="/">На главную</a>
   </div>
 </body>
 </html>
