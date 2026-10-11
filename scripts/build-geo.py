@@ -29,6 +29,14 @@
 База DB-IP выходит раз в месяц. Обновить:
   python3 scripts/build-geo.py            — свежий выпуск
   python3 scripts/build-geo.py --if-missing  — только если базы нет
+
+База в git не лежит, поэтому её должен собирать каждый деплой. Сайт
+выкатывают Workers Builds из GitHub при каждом push в main, а они не
+запускают ни predeploy, ни [build] из wrangler.toml — только установку
+зависимостей и `npx wrangler deploy`. Поэтому скрипт висит на
+postinstall: npm install в сборке сам соберёт свежую базу. Если
+скачать её не удалось, сборка падает и прод остаётся на прошлой версии,
+а не выкатывается без гео.
 """
 import argparse, array, bisect, csv, datetime, gzip, io, json, math
 import pathlib, shutil, socket, sys, urllib.request, zipfile

@@ -83,7 +83,8 @@ function geoFile(env, origin, path, json = false) {
       if (!r.ok) throw new Error(`geo/${path}: ${r.status}`);
       return json ? r.json() : new Uint8Array(await r.arrayBuffer());
     })
-    .catch(() => {
+    .catch((err) => {
+      console.error('geo: не прочитан файл базы', path, String(err));
       geoCache.delete(path); // неудачу не запоминаем
       return null;
     });
