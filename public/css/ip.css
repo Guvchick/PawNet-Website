@@ -89,6 +89,9 @@
 
 .facts__note[hidden] { display: none; }
 
+.facts__note a { text-decoration: underline; text-underline-offset: 2px; }
+.facts__note a:hover { color: var(--text); }
+
 /* ── Призыв ──────────────────────────────────────────────────────── */
 .ip-cta {
   position: relative;

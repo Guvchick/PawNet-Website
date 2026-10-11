@@ -5,6 +5,9 @@
   "description": "PawNet — статический сайт на Cloudflare Workers",
   "scripts": {
     "dev": "node node_modules/wrangler/bin/wrangler.js dev",
+    "stamp": "python3 scripts/stamp-assets.py",
+    "geo": "python3 scripts/build-geo.py",
+    "predeploy": "python3 scripts/stamp-assets.py && python3 scripts/build-geo.py --if-missing",
     "deploy": "node node_modules/wrangler/bin/wrangler.js deploy",
     "check": "node node_modules/wrangler/bin/wrangler.js deploy --dry-run"
   },

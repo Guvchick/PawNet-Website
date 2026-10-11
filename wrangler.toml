@@ -13,6 +13,11 @@ binding = "ASSETS"
 directory = "./public"
 html_handling = "auto-trailing-slash"
 not_found_handling = "404-page"
+# Какие пути сначала идут в Worker. Со списком остальные пути до Worker'а
+# не доходят вовсе (сразу ассеты и 404-page), поэтому /api/* обязателен.
+# /geo/* — гео-база для /api/ip: снаружи по этим путям 404, а сам Worker
+# читает файлы через биндинг ASSETS.
+run_worker_first = ["/api/*", "/geo/*"]
 
 [observability]
 enabled = true

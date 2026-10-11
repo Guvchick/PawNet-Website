@@ -4,6 +4,13 @@
 docs/source/figma-export.html, чтобы скрипт был повторяемым."""
 import re, pathlib
 
+# Домен, на котором сайт реально открывается. От него строятся canonical
+# и og:url: если он укажет на неработающий адрес, Google сочтёт страницу
+# «вариантом с тегом canonical» и в индекс её не возьмёт.
+SITE = 'https://pawnet.cloud'
+# В макете ссылки ведут на старый pawnet.ink — у него нет DNS-записей.
+OLD_SITE = 'https://pawnet.ink'
+
 SRC = pathlib.Path('docs/source/figma-export.html').read_text(encoding='utf-8')
 # координаты строк нарисованного оглавления (сняты из макета замером в браузере)
 import json
@@ -97,7 +104,7 @@ def footer(route):
       <div>
         <p class="footer__brand">PawNet</p>
         <div class="footer__meta">
-          <a href="https://pawnet.ink">pawnet.ink</a> · <a href="https://lk.pawnet.cloud">lk.pawnet.cloud</a><br>
+          <a href="{SITE}">{SITE.split('//', 1)[1]}</a> · <a href="https://lk.pawnet.cloud">lk.pawnet.cloud</a><br>
           Пержу Давыд Александрович<br>
           ИНН 745311160120 · режим НПД<br>
           <a href="mailto:guvchick@icloud.com">guvchick@icloud.com</a>
@@ -205,6 +212,9 @@ for key, cfg in PAGES.items():
     svg = add_backplate(svg, cfg['hero_end'])
     svg, sealed = seal_seams(svg)
 
+    # ссылки макета на старый домен делаем относительными
+    svg = svg.replace(f'href="{OLD_SITE}/', 'href="/').replace(f'href="{OLD_SITE}"', 'href="/"')
+
     crop_h = cfg['footer_top'] - 90
     svg, n = re.subn(
         rf'<svg width="1440" height="{cfg["total"]}" viewBox="0 0 1440 {cfg["total"]}"',
@@ -242,12 +252,15 @@ for key, cfg in PAGES.items():
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{cfg['title']}</title>
 <meta name="description" content="{cfg['desc']}">
-<link rel="canonical" href="https://pawnet.ink{cfg['route']}">
+<link rel="canonical" href="{SITE}{cfg['route']}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#F7D44F">
 <meta property="og:title" content="{cfg['title']}">
 <meta property="og:type" content="article">
-<meta property="og:url" content="https://pawnet.ink{cfg['route']}">
+<meta property="og:url" content="{SITE}{cfg['route']}">
+<link rel="preload" href="/fonts/dela-gothic-one-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/geologica-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/fonts.css">
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/doc.css">
 </head>

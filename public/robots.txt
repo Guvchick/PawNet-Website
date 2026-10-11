@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pawnet.ink/sitemap.xml
+Sitemap: https://pawnet.cloud/sitemap.xml

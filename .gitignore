@@ -6,3 +6,7 @@ node_modules/
 *.log
 .vscode/
 .idea/
+
+# гео-база для /api/ip, собирается scripts/build-geo.py
+public/geo/
+public/geo.tmp/

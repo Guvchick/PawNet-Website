@@ -5,16 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Твой IP-адрес — PawNet</title>
 <meta name="description" content="Узнай свой IP-адрес, провайдера, страну и город — так тебя видят сайты и рекламные сети прямо сейчас.">
-<link rel="canonical" href="https://pawnet.ink/ip">
+<link rel="canonical" href="https://pawnet.cloud/ip">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#F7D44F">
 <meta property="og:title" content="Твой IP-адрес — PawNet">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://pawnet.ink/ip">
-<link rel="preload" href="/fonts/geologica-800-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/css/base.css">
-<link rel="stylesheet" href="/css/landing.css">
-<link rel="stylesheet" href="/css/ip.css">
+<meta property="og:url" content="https://pawnet.cloud/ip">
+<link rel="preload" href="/fonts/dela-gothic-one-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/geologica-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/fonts.css?v=7edb85d6c4">
+<link rel="stylesheet" href="/css/base.css?v=fe7b00868f">
+<link rel="stylesheet" href="/css/landing.css?v=f7f764eff2">
+<link rel="stylesheet" href="/css/ip.css?v=c83e5f93aa">
 </head>
 <!-- data-ip-endpoint: адрес, который идёт в Cloudflare напрямую, мимо CDN.
      Пока пуст — данные берутся с /api/ip этого же домена. -->
@@ -98,9 +100,16 @@
         </div>
       </div>
 
-      <p class="facts__note" id="facts-note" hidden>
-        Провайдер и расположение сейчас не определяются: сайт отдаётся через CDN,
-        и до сервера доходит адрес его узла, а не твой. Сам IP-адрес показан верно.
+      <!-- Подписи под карточками: какая видна, решает ip.js по полю source.
+           Ссылка на DB-IP — условие их лицензии CC BY 4.0. -->
+      <p class="facts__note" data-note="db-ip" hidden>
+        Провайдер и расположение определены по открытой базе прямо на нашем сервере —
+        адрес никуда не передаётся. Город указан приблизительно.
+        Данные: <a href="https://db-ip.com" target="_blank" rel="noopener">IP Geolocation by DB-IP</a>,
+        <a href="https://www.geonames.org" target="_blank" rel="noopener">GeoNames</a>.
+      </p>
+      <p class="facts__note" data-note="none" hidden>
+        Провайдер и расположение сейчас не определяются. Сам IP-адрес показан верно.
       </p>
     </div>
   </section>
@@ -122,7 +131,7 @@
       <div>
         <p class="footer__brand">PawNet</p>
         <div class="footer__meta">
-          <a href="https://pawnet.ink">pawnet.ink</a> · <a href="https://lk.pawnet.cloud">lk.pawnet.cloud</a><br>
+          <a href="https://pawnet.cloud">pawnet.cloud</a> · <a href="https://lk.pawnet.cloud">lk.pawnet.cloud</a><br>
           Пержу Давыд Александрович<br>
           ИНН 745311160120 · режим НПД<br>
           <a href="mailto:guvchick@icloud.com">guvchick@icloud.com</a>

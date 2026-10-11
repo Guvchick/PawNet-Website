@@ -5,11 +5,11 @@
   const value = document.getElementById('ip-value');
   const copy = document.getElementById('ip-copy');
   const facts = document.querySelectorAll('[data-fact]');
-  const note = document.getElementById('facts-note');
+  const notes = document.querySelectorAll('[data-note]');
 
-  // Если сайт отдаётся через сторонний CDN, до Worker'а доходит адрес
-  // узла CDN, и гео-данные посчитать не из чего. Обойти это можно, дав
-  // браузеру адрес, который идёт в Cloudflare напрямую, мимо CDN:
+  // За CDN Worker считает гео по своей базе (source: 'db-ip'). Если нужны
+  // данные самого Cloudflare, можно дать браузеру адрес, который идёт
+  // в Cloudflare напрямую, мимо CDN:
   // <body data-ip-endpoint="https://ip.pawnet.cloud/api/ip">
   const endpoints = [document.body.dataset.ipEndpoint, '/api/ip'].filter(Boolean);
 
@@ -41,7 +41,9 @@
       } catch { /* таймзона не распознана — оставляем как есть */ }
     }
 
-    if (note) note.hidden = Boolean(data.geo);
+    // подпись под карточками: откуда данные или почему их нет
+    const shown = data.geo ? data.source : 'none';
+    notes.forEach((el) => { el.hidden = el.dataset.note !== shown; });
   };
 
   const load = async () => {
